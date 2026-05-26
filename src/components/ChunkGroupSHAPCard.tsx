@@ -7,9 +7,18 @@ interface Props {
   title?: string;
 }
 
-const borderColors = ["border-indigo-300", "border-emerald-300", "border-amber-300"];
-const labelColors = ["text-indigo-700", "text-emerald-700", "text-amber-700"];
-const bgColors = ["bg-indigo-50", "bg-emerald-50", "bg-amber-50"];
+const borderColors = [
+  "border-indigo-300", "border-emerald-300", "border-amber-300",
+  "border-rose-300",   "border-sky-300",     "border-violet-300", "border-teal-300",
+];
+const labelColors = [
+  "text-indigo-700", "text-emerald-700", "text-amber-700",
+  "text-rose-700",   "text-sky-700",     "text-violet-700", "text-teal-700",
+];
+const bgColors = [
+  "bg-indigo-50", "bg-emerald-50", "bg-amber-50",
+  "bg-rose-50",   "bg-sky-50",     "bg-violet-50", "bg-teal-50",
+];
 
 export default function ChunkGroupSHAPCard({ groups, title = "Important passage groups" }: Props) {
   return (
@@ -21,10 +30,10 @@ export default function ChunkGroupSHAPCard({ groups, title = "Important passage 
         {groups.map((group, idx) => (
           <div
             key={group.group_id}
-            className={`rounded-lg border ${borderColors[idx % 3]} ${bgColors[idx % 3]} p-3`}
+            className={`rounded-lg border ${borderColors[idx % 7]} ${bgColors[idx % 7]} p-3`}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-semibold ${labelColors[idx % 3]}`}>
+              <span className={`text-xs font-semibold ${labelColors[idx % 7]}`}>
                 Group {idx + 1}
               </span>
               <span className="text-xs text-gray-400 font-mono">

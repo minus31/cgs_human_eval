@@ -1,11 +1,7 @@
 import rawData from "../data/human_eval_data.json";
 
 export interface RankSHAPFeature {
-  chunk_id: string;
-  source: string;
-  doc_id: string;
-  chunk_index: number;
-  text: string;
+  token: string;
   shap: number;
   abs_shap: number;
   rank: number;
