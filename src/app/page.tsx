@@ -96,9 +96,9 @@ export default function LandingPage() {
 
         <div className="mt-5 pt-5 border-t border-gray-100">
           <p className="text-xs text-gray-400 leading-relaxed">
-            We report the consent procedure in Appendix Human Evaluation Protocol. Participants
-            were informed that their responses would be used for research evaluation of ranking
-            explanations before starting the study.
+            By participating in this study, you acknowledge that your responses may be used for
+            academic research purposes, including the evaluation of document ranking explanation
+            methods.
           </p>
         </div>
       </div>
