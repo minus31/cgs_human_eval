@@ -1,7 +1,11 @@
 import rawData from "../data/human_eval_data.json";
 
-export interface Feature {
-  token: string;
+export interface RankSHAPFeature {
+  chunk_id: string;
+  source: string;
+  doc_id: string;
+  chunk_index: number;
+  text: string;
   shap: number;
   abs_shap: number;
   rank: number;
@@ -28,6 +32,7 @@ export interface Document {
   text: string;
   preview?: string;
   target_rank: number;
+  target_position: number;
   ranker_score: number;
   is_relevant: boolean;
 }
@@ -39,29 +44,23 @@ export interface Item {
   documents: Document[];
   judgments: Array<{ doc_id: string; relevance: number }>;
   conditions: {
-    rankshap: { features: Feature[] };
-    chunkgroupshap: { groups: Group[] };
+    rankshap: { display_type: string; features: RankSHAPFeature[] };
+    chunkgroupshap: { display_type: string; groups: Group[] };
+    chunkgroupshap_random: { display_type: string; groups: Group[] };
   };
 }
 
 export interface HumanEvalData {
-  metadata: {
-    ui_instruction: string;
-    assignment_policy: {
-      tasks_per_user: number;
-      rankshap_tasks: number;
-      chunkgroupshap_tasks: number;
-    };
-  };
+  metadata: Record<string, unknown>;
   condition_pools: {
     rankshap: string[];
     chunkgroupshap: string[];
+    chunkgroupshap_random: string[];
   };
   items: Item[];
 }
 
 const data = rawData as unknown as HumanEvalData;
-
 const itemMap = new Map<string, Item>(data.items.map((item) => [item.query_id, item]));
 
 export function getHumanEvalData(): HumanEvalData {
@@ -78,4 +77,8 @@ export function getRankSHAPPool(): string[] {
 
 export function getChunkGroupSHAPPool(): string[] {
   return data.condition_pools.chunkgroupshap;
+}
+
+export function getChunkGroupSHAPRandomPool(): string[] {
+  return data.condition_pools.chunkgroupshap_random;
 }

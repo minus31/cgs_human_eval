@@ -1,4 +1,4 @@
-import { getRankSHAPPool, getChunkGroupSHAPPool } from "./data";
+import { getRankSHAPPool, getChunkGroupSHAPPool, getChunkGroupSHAPRandomPool } from "./data";
 
 function seededShuffle<T>(arr: T[], seed: string): T[] {
   const copy = [...arr];
@@ -14,22 +14,29 @@ function seededShuffle<T>(arr: T[], seed: string): T[] {
   return copy;
 }
 
+export type Condition = "rankshap" | "chunkgroupshap" | "chunkgroupshap_random";
+
 export interface TaskAssignmentInput {
   taskIndex: number;
-  condition: "rankshap" | "chunkgroupshap";
+  condition: Condition;
   queryId: string;
 }
 
 export function sampleTasks(seed: string): TaskAssignmentInput[] {
   const rsPool = getRankSHAPPool();
   const cgPool = getChunkGroupSHAPPool();
+  const cgrPool = getChunkGroupSHAPRandomPool();
 
   const shuffledRS = seededShuffle(rsPool, seed + "-rs");
-  const shuffledCG = seededShuffle(cgPool, seed + "-cg");
-
   const selectedRS = shuffledRS.slice(0, 5);
-  const selectedCGFiltered = shuffledCG.filter((id) => !selectedRS.includes(id));
-  const selectedCG = selectedCGFiltered.slice(0, 5);
+
+  const usedIds = new Set(selectedRS);
+  const shuffledCG = seededShuffle(cgPool, seed + "-cg").filter((id) => !usedIds.has(id));
+  const selectedCG = shuffledCG.slice(0, 5);
+
+  selectedCG.forEach((id) => usedIds.add(id));
+  const shuffledCGR = seededShuffle(cgrPool, seed + "-cgr").filter((id) => !usedIds.has(id));
+  const selectedCGR = shuffledCGR.slice(0, 5);
 
   const tasks: TaskAssignmentInput[] = [];
   for (let i = 0; i < 5; i++) {
@@ -37,6 +44,9 @@ export function sampleTasks(seed: string): TaskAssignmentInput[] {
   }
   for (let i = 0; i < 5; i++) {
     tasks.push({ taskIndex: i + 6, condition: "chunkgroupshap", queryId: selectedCG[i] });
+  }
+  for (let i = 0; i < 5; i++) {
+    tasks.push({ taskIndex: i + 11, condition: "chunkgroupshap_random", queryId: selectedCGR[i] });
   }
   return tasks;
 }

@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase, EvalResponse } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
-  const body: EvalResponse = await req.json();
+  const body = await req.json();
 
-  const { session_id, email, task_index, condition, query_id, judgments,
-          initial_order, target_order, submitted_order, elapsed_ms, drag_count } = body;
+  const {
+    session_id, email, task_index, condition, query_id,
+    judgments, initial_order, target_order, submitted_order,
+    elapsed_ms, drag_count, started_at, submitted_at,
+  } = body;
 
   if (!session_id || !email || !task_index || !condition || !query_id ||
       !initial_order || !target_order || !submitted_order ||
@@ -25,6 +28,8 @@ export async function POST(req: NextRequest) {
     submitted_order,
     elapsed_ms,
     drag_count,
+    started_at: started_at ?? null,
+    submitted_at: submitted_at ?? new Date().toISOString(),
   });
 
   if (error) {

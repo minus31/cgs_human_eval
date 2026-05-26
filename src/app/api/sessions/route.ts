@@ -31,19 +31,22 @@ export async function POST(req: NextRequest) {
       };
     });
 
+    const conditions =
+      t.condition === "rankshap"
+        ? { rankshap: item.conditions.rankshap }
+        : t.condition === "chunkgroupshap"
+        ? { chunkgroupshap: item.conditions.chunkgroupshap }
+        : { chunkgroupshap_random: item.conditions.chunkgroupshap_random };
+
     return {
       taskIndex: t.taskIndex,
       condition: t.condition,
       queryId: t.queryId,
-      queryText: item.query_text,
       documents,
       initialOrder,
       targetOrder: item.target_order,
       judgments: item.judgments,
-      conditions:
-        t.condition === "rankshap"
-          ? { rankshap: item.conditions.rankshap }
-          : { chunkgroupshap: item.conditions.chunkgroupshap },
+      conditions,
     };
   });
 
