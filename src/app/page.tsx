@@ -96,8 +96,9 @@ export default function LandingPage() {
 
         <div className="mt-5 pt-5 border-t border-gray-100">
           <p className="text-xs text-gray-400 leading-relaxed">
-            Participants were recruited as voluntary adult participants and were not paid; the task
-            was short, low-risk, and used only public benchmark passages.
+            We report the consent procedure in Appendix Human Evaluation Protocol. Participants
+            were informed that their responses would be used for research evaluation of ranking
+            explanations before starting the study.
           </p>
         </div>
       </div>
