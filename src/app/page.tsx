@@ -47,7 +47,7 @@ export default function LandingPage() {
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Passage Ranking Study</h1>
           <p className="mt-2 text-sm text-gray-600">
-            You will complete 10 ranking tasks. Each task asks you to order 5 passages for a
+            You will complete 15 ranking tasks. Each task asks you to order 5 passages for a
             given query using the provided explanation.
           </p>
         </div>
@@ -93,6 +93,13 @@ export default function LandingPage() {
         <p className="mt-4 text-xs text-gray-400 text-center">
           Your email is only used to identify your session.
         </p>
+
+        <div className="mt-5 pt-5 border-t border-gray-100">
+          <p className="text-xs text-gray-400 leading-relaxed">
+            Participants were recruited as voluntary adult participants and were not paid; the task
+            was short, low-risk, and used only public benchmark passages.
+          </p>
+        </div>
       </div>
     </main>
   );
